@@ -40,5 +40,20 @@ export function calculatePayslip(salary: Salary): Payslip {
     return result;
   }
   
+  if (age >= 18) {
+    const gross = salary.gross;
+
+    const ahv = gross * 8.7 / 100;
+    const iv = gross * 1.4 / 100;
+    const eo = gross * 0.5 / 100;
+
+    result.deductions.set("AHV", ahv);
+    result.deductions.set("IV", iv);
+    result.deductions.set("EO", eo);
+
+    result.totalDeductions = ahv + iv + eo;
+    result.net = gross - result.totalDeductions;
+  }
+
   return result;
 }
